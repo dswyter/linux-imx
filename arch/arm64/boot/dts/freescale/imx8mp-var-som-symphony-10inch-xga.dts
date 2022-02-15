@@ -18,23 +18,23 @@
 		compatible = "gpio-keys";
 		status = "okay";
 
-		power {
-			label = "Power";
-			linux,code = <KEY_POWER>;
+		back {
+			label = "Back";
+			linux,code = <KEY_BACK>;
 			gpios = <&pca9534 1 GPIO_ACTIVE_LOW>;
 			wakeup-source;
 		};
 
-		volumeup {
-			label = "Volume Up";
-			linux,code = <KEY_VOLUMEUP>;
+		home {
+			label = "Home";
+			linux,code = <KEY_HOMEPAGE>;
 			gpios = <&pca9534 2 GPIO_ACTIVE_LOW>;
 			wakeup-source;
 		};
 
-		volumedown {
-			label = "Volume Down";
-			linux,code = <KEY_VOLUMEDOWN>;
+		menu {
+			label = "Menu";
+			linux,code = <KEY_MENU>;
 			gpios = <&pca9534 3 GPIO_ACTIVE_LOW>;
 			wakeup-source;
 		};

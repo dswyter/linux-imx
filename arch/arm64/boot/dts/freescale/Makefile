@@ -99,9 +99,7 @@ dtb-$(CONFIG_ARCH_MXC) += imx8mp-var-dart-dt8mcustomboard.dtb imx8mp-var-som-sym
 			  imx8mp-var-dart-dt8mcustomboard-hdmi.dtb \
 			  imx8mp-var-som-symphony-basler-isp0.dtb \
 			  imx8mp-var-dart-dt8mcustomboard-basler-isp0.dtb \
-			  imx8mp-var-dart-dt8mcustomboard-legacy-basler-isp0.dtb\
-                          imx8mp-var-dart-dt8mcustomboard-legacy-basler-isp0.dtb \
-                          imx8mp-var-som-symphony-10inch-xga.dtb \
+			  imx8mp-var-som-symphony-10inch-xga.dtb \
                           imx8mp-var-som-symphony-10inch-xga-exc3000_over_i2c.dtb \
                           imx8mp-var-som-symphony-7inch-wvga.dtb\
 dtb-$(CONFIG_ARCH_MXC) += imx8mq-evk.dtb imx8mq-evk-rpmsg.dtb imx8mq-evk-pcie1-m2.dtb imx8mq-evk-usd-wifi.dtb \

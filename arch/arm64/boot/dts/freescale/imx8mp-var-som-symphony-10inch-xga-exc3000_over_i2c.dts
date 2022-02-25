@@ -272,19 +272,22 @@
 		reg = <0x68>;
 		status = "okay";
 	};
-	
-        touchscreen@2a {
-                compatible = "eeti,exc80h60";
-                pinctrl-names = "default";
-                pinctrl-0 = <&pinctrl_i2c4>;
-                reg = <0x2a>;
-                interrupt-parent = <&gpio1>;
-                interrupts = <12 IRQ_TYPE_LEVEL_LOW>;
-                touchscreen-inverted-x;
-                touchscreen-swapped-x-y;
-                status = "okay";
-        };
 
+	/* Capacitive touch controller */
+	ft5x06_ts: ft5x06_ts@38 {
+		compatible = "edt,edt-ft5206";
+		reg = <0x38>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_captouch>;
+		interrupt-parent = <&gpio5>;
+		interrupts = <3 IRQ_TYPE_EDGE_FALLING>;
+		touchscreen-size-x = <800>;
+		touchscreen-size-y = <480>;
+		touchscreen-inverted-x;
+		touchscreen-inverted-y;
+		wakeup-source;
+		status = "okay";
+	};
 };
 
 &flexcan2 {

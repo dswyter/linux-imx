@@ -90,17 +90,26 @@ dtb-$(CONFIG_ARCH_MXC) += imx8mp-evk.dtb imx8mp-evk-rm67191.dtb imx8mp-evk-it626
 			  imx8mp-evk-usdhc1-m2.dtb
 dtb-$(CONFIG_ARCH_MXC) += imx8mq-evk.dtb imx8mq-evk-rpmsg.dtb imx8mp-ab2.dtb
 dtb-$(CONFIG_ARCH_MXC) += imx8mp-ddr4-evk.dtb
-dtb-$(CONFIG_ARCH_MXC) += imx8mp-var-dart-dt8mcustomboard.dtb imx8mp-var-som-symphony-hdmi.dtb \
+dtb-$(CONFIG_ARCH_MXC) += imx8mp-var-dart-dt8mcustomboard.dtb \
+			  imx8mp-var-som-symphony-hdmi.dtb \
 			  imx8mp-var-dart-dt8mcustomboard-legacy.dtb \
-			  imx8mp-var-som-symphony.dtb imx8mp-var-som-symphony-2nd-ov5640.dtb \
-			  imx8mp-var-dart-dt8mcustomboard-m7.dtb imx8mp-var-dart-dt8mcustomboard-legacy-hdmi.dtb \
+			  imx8mp-var-som-symphony.dtb \
+			  imx8mp-var-som-symphony-2nd-ov5640.dtb \
+			  imx8mp-var-dart-dt8mcustomboard-m7.dtb \
+			  imx8mp-var-dart-dt8mcustomboard-legacy-hdmi.dtb \
 			  imx8mp-var-dart-dt8mcustomboard-legacy-m7.dtb \
-			  imx8mp-var-som-symphony-m7.dtb imx8mp-var-som-symphony-2nd-ov5640-m7.dtb \
+			  imx8mp-var-som-symphony-m7.dtb \
+			  imx8mp-var-som-symphony-2nd-ov5640-m7.dtb \
 			  imx8mp-var-dart-dt8mcustomboard-hdmi.dtb \
 			  imx8mp-var-som-symphony-basler-isp0.dtb \
 			  imx8mp-var-dart-dt8mcustomboard-basler-isp0.dtb \
+			  imx8mp-var-dart-dt8mcustomboard-legacy-basler-isp0.dtb \
+			  imx8mp-var-som-symphony-10inch-svga.dtb \
+                          imx8mp-var-som-symphony-10inch-svga-exc3000_over_i2c.dtb \
 			  imx8mp-var-som-symphony-10inch-xga.dtb \
-                          imx8mp-var-som-symphony-10inch-xga-exc3000_over_i2c.dtb \
+			  imx8mp-var-som-symphony-10inch-xga-exc3000_over_i2c.dtb \
+			  imx8mp-var-som-symphony-12inch-xga.dtb \
+			  imx8mp-var-som-symphony-12inch-xga-exc3000_over_i2c.dtb \
                           imx8mp-var-som-symphony-7inch-wvga.dtb
 dtb-$(CONFIG_ARCH_MXC) += imx8mq-evk.dtb imx8mq-evk-rpmsg.dtb imx8mq-evk-pcie1-m2.dtb imx8mq-evk-usd-wifi.dtb \
 			  imx8mq-evk-usdhc2-m2.dtb

@@ -114,16 +114,16 @@
 	};
 
 	panel {
-		compatible = "innolux,g121xce_l01", "panel-lvds";
+		compatible = "g104age_l02", "panel-lvds";
 		backlight = <&backlight>;
-		width-mm = <246>;
-		height-mm = <184>;
-		label = "g121xce_l01";
+		width-mm = <210>;
+		height-mm = <158>;
+		label = "g104age_l02";
 		data-mapping = "jeida-24";
 		status = "okay";
 
 		panel-timing {
-			clock-frequency = <64900000>;
+			clock-frequency = <65000000>;
 			hactive = <1024>;
 			vactive = <768>;
 			hback-porch = <160>;

@@ -114,22 +114,22 @@
 	};
 
 	panel {
-		compatible = "innolux,g121xce_l01", "panel-lvds";
+		compatible = "innolux,g104age_l02", "panel-lvds";
 		backlight = <&backlight>;
-		width-mm = <246>;
-		height-mm = <184>;
-		label = "g121xce_l01";
+		width-mm = <211>;
+		height-mm = <158>;
+		label = "g104age_l02";
 		data-mapping = "jeida-24";
 		status = "okay";
 
 		panel-timing {
-			clock-frequency = <64900000>;
-			hactive = <1024>;
-			vactive = <768>;
-			hback-porch = <160>;
-			hfront-porch = <159>;
-			vback-porch = <19>;
-			vfront-porch = <18>;
+			clock-frequency = <40000000>;
+			hactive = <800>;
+			vactive = <600>;
+			hback-porch = <128>;
+			hfront-porch = <127>;
+			vback-porch = <28>;
+			vfront-porch = <29>;
 			hsync-len = <1>;
 			vsync-len = <1>;
 			hsync-active = <0>;

@@ -437,20 +437,11 @@
 	status = "okay";
 };
 
-&enetc_port2 {
-	status = "okay";
-};
-
 &lpuart0 {
 	status = "okay";
 };
 
-&lpuart1 {
-	status = "okay";
-};
-
-&mscc_felix_port4 {
-	ethernet = <&enetc_port2>;
+&lpuart0 {
 	status = "okay";
 };
 

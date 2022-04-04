@@ -334,11 +334,6 @@
 		arm,no-tick-in-suspend;
 	};
 
-	throttle_devfreq: devfreq {
-		throttle,max_state = <1>;
-		#cooling-cells = <2>;
-	};
-
 	thermal-zones {
 		cpu-thermal {
 			polling-delay-passive = <250>;
@@ -365,8 +360,7 @@
 						<&A53_0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
 						<&A53_1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
 						<&A53_2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-						<&A53_3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-						<&throttle_devfreq 0 1>;
+						<&A53_3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
 				};
 			};
 		};
@@ -1453,6 +1447,20 @@
 			compatible = "dsi,mipi-reset";
 			resets = <&dispmix_mipi_rst IMX8MM_MIPI_M_RESET>;
 		};
+	};
+
+	rpmsg: rpmsg{
+		compatible = "fsl,imx8mq-rpmsg";
+		/* up to now, the following channels are used in imx rpmsg
+		 * - tx1/rx1: messages channel.
+		 * - general interrupt1: remote proc finish re-init rpmsg stack
+		 *   when A core is partition reset.
+		 */
+		mbox-names = "tx", "rx", "rxdb";
+		mboxes = <&mu 0 1
+			  &mu 1 1
+			  &mu 3 1>;
+		status = "disabled";
 	};
 
 	vpu_h1: vpu_h1@38320000 {

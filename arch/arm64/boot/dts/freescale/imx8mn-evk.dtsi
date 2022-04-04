@@ -28,6 +28,14 @@
 		reg = <0x0 0x40000000 0 0x80000000>;
 	};
 
+	modem_reset: modem-reset {
+		compatible = "gpio-reset";
+		reset-gpios = <&gpio2 6 GPIO_ACTIVE_LOW>;
+		reset-delay-us = <2000>;
+		reset-post-delay-ms = <40>;
+		#reset-cells = <0>;
+	};
+
 	ir_recv: ir-receiver {
 		compatible = "gpio-ir-receiver";
 		gpios = <&gpio1 13 GPIO_ACTIVE_LOW>;
@@ -176,7 +184,7 @@
 		#size-cells = <1>;
 		compatible = "jedec,spi-nor";
 		spi-max-frequency = <80000000>;
-		spi-tx-bus-width = <1>;
+		spi-tx-bus-width = <4>;
 		spi-rx-bus-width = <4>;
 	};
 };
@@ -198,7 +206,7 @@
 	status = "okay";
 
 	adv_bridge: adv7535@3d {
-		compatible = "adi,adv7535";
+		compatible = "adi,adv7533";
 		reg = <0x3d>;
 		adi,addr-cec = <0x3b>;
 		adi,dsi-lanes = <4>;
@@ -442,6 +450,7 @@
 	assigned-clocks = <&clk IMX8MN_CLK_UART1>;
 	assigned-clock-parents = <&clk IMX8MN_SYS_PLL1_80M>;
 	fsl,uart-has-rtscts;
+	resets = <&modem_reset>;
 	status = "okay";
 };
 
@@ -468,12 +477,12 @@
 	pinctrl-1 = <&pinctrl_usdhc1_100mhz>, <&pinctrl_wlan>;
 	pinctrl-2 = <&pinctrl_usdhc1_200mhz>, <&pinctrl_wlan>;
 	bus-width = <4>;
+	pm-ignore-notify;
 	keep-power-in-suspend;
 	non-removable;
-	wakeup-source;
+	cap-power-off-card;
 	/delete-property/ vmmc-supply;
 	mmc-pwrseq = <&usdhc1_pwrseq>;
-	fsl,sdio-interrupt-enabled;
 	status = "okay";
 
 	wifi_wake_host {
@@ -718,6 +727,7 @@
 			MX8MN_IOMUXC_UART1_TXD_UART1_DCE_TX	0x140
 			MX8MN_IOMUXC_UART3_RXD_UART1_DCE_CTS_B	0x140
 			MX8MN_IOMUXC_UART3_TXD_UART1_DCE_RTS_B	0x140
+			MX8MN_IOMUXC_SD1_DATA4_GPIO2_IO6	0x19
 		>;
 	};
 

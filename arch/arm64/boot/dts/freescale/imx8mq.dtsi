@@ -209,16 +209,6 @@
 		};
 	};
 
-	resmem: reserved-memory {
-		#address-cells = <2>;
-		#size-cells = <2>;
-		ranges;
-		secure_region: secure {
-			 compatible = "imx-secure-ion-pool";
-			 reg = <0x0 0xE0000000 0 0x10000000>;
-		};
-        };
-
 	pmu {
 		compatible = "arm,cortex-a53-pmu";
 		interrupts = <GIC_PPI 7 IRQ_TYPE_LEVEL_HIGH>;
@@ -708,9 +698,10 @@
 					 * it as a shared PCIE power
 					 * domain.
 					 */
-					pgc_pcie2: power-domain@1 {
+					pgc_pcie: power-domain@1 {
 						#power-domain-cells = <0>;
-						reg = <IMX8M_POWER_DOMAIN_PCIE2>;
+						reg = <IMX8M_POWER_DOMAIN_PCIE1>;
+						power-domains = <&pgc_pcie2>;
 					};
 
 					pgc_otg1: power-domain@2 {
@@ -758,10 +749,9 @@
 						reg = <IMX8M_POWER_DOMAIN_MIPI_CSI2>;
 					};
 
-					pgc_pcie: power-domain@a {
+					pgc_pcie2: power-domain@a {
 						#power-domain-cells = <0>;
-						reg = <IMX8M_POWER_DOMAIN_PCIE1>;
-						power-domains = <&pgc_pcie2>;
+						reg = <IMX8M_POWER_DOMAIN_PCIE2>;
 					};
 				};
 			};
@@ -1413,7 +1403,6 @@
 			usb3-resume-missing-cas;
 			snps,power-down-scale = <2>;
 			snps,parkmode-disable-ss-quirk;
-			snps,dis_rxdet_inp3_quirk;
 			status = "disabled";
 		};
 
@@ -1448,7 +1437,6 @@
 			usb3-resume-missing-cas;
 			snps,power-down-scale = <2>;
 			snps,parkmode-disable-ss-quirk;
-			snps,dis_rxdet_inp3_quirk;
 			status = "disabled";
 		};
 
@@ -1523,14 +1511,6 @@
 				 <&src IMX8MQ_RESET_PCIE_CTRL_APPS_CLK_REQ>,
 				 <&src IMX8MQ_RESET_PCIE_CTRL_APPS_TURNOFF>;
 			reset-names = "pciephy", "apps", "clkreq", "turnoff";
-			assigned-clocks = <&clk IMX8MQ_CLK_PCIE1_CTRL>,
-			                  <&clk IMX8MQ_CLK_PCIE1_PHY>,
-			                  <&clk IMX8MQ_CLK_PCIE1_AUX>;
-			assigned-clock-parents = <&clk IMX8MQ_SYS2_PLL_250M>,
-			                         <&clk IMX8MQ_SYS2_PLL_100M>,
-			                         <&clk IMX8MQ_SYS1_PLL_80M>;
-			assigned-clock-rates = <250000000>, <100000000>,
-			                       <10000000>;
 			status = "disabled";
 		};
 
@@ -1563,14 +1543,6 @@
 				 <&src IMX8MQ_RESET_PCIE2_CTRL_APPS_CLK_REQ>,
 				 <&src IMX8MQ_RESET_PCIE2_CTRL_APPS_TURNOFF>;
 			reset-names = "pciephy", "apps", "clkreq", "turnoff";
-			assigned-clocks = <&clk IMX8MQ_CLK_PCIE2_CTRL>,
-			                  <&clk IMX8MQ_CLK_PCIE2_PHY>,
-			                  <&clk IMX8MQ_CLK_PCIE2_AUX>;
-			assigned-clock-parents = <&clk IMX8MQ_SYS2_PLL_250M>,
-			                         <&clk IMX8MQ_SYS2_PLL_100M>,
-			                         <&clk IMX8MQ_SYS1_PLL_80M>;
-			assigned-clock-rates = <250000000>, <100000000>,
-			                       <10000000>;
 			status = "disabled";
 		};
 
@@ -1665,6 +1637,20 @@
 				<&clk IMX8MQ_GPU_PLL_OUT>;
 		assigned-clock-rates = <800000000>, <800000000>, <800000000>, <800000000>;
 		power-domains = <&pgc_gpu>;
+		status = "disabled";
+	};
+
+	rpmsg: rpmsg{
+		compatible = "fsl,imx8mq-rpmsg";
+		/* up to now, the following channels are used in imx rpmsg
+		 * - tx1/rx1: messages channel.
+		 * - general interrupt1: remote proc finish re-init rpmsg stack
+		 *   when A core is partition reset.
+		 */
+		mbox-names = "tx", "rx", "rxdb";
+		mboxes = <&mu 0 1
+			  &mu 1 1
+			  &mu 3 1>;
 		status = "disabled";
 	};
 };

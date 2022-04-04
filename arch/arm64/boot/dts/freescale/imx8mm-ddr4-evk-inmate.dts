@@ -153,6 +153,7 @@
 
 /delete-node/ &system_counter;
 
+/delete-node/ &rpmsg;
 &ocotp {
 	/delete-property/ compatible;
 	status = "disabled";

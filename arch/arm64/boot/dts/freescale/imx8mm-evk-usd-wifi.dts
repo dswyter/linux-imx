@@ -46,13 +46,8 @@
 &usdhc2 {
 	pinctrl-assert-gpios = <&gpio1 4 GPIO_ACTIVE_HIGH>;
 	/delete-property/ cd-gpios;
+	pm-ignore-notify;
 	keep-power-in-suspend;
 	non-removable;
-	wakeup-source;
-	fsl,sdio-interrupt-enabled;
-};
-
-&usdhc1 {
-	status = "disabled";
-	/delete-node/ wifi_wake_host;
+	cap-power-off-card;
 };

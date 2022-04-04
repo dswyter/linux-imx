@@ -23,7 +23,3 @@
 &pcie0{
 	status = "disabled";
 };
-
-&gpio5 {
-	/delete-node/ wl-reg-on-hog; /* disable the on-board wifi */
-};

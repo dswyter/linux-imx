@@ -368,11 +368,6 @@
 		};
 	};
 
-	throttle_devfreq: devfreq {
-		throttle,max_state = <1>;
-		#cooling-cells = <2>;
-	};
-
 	thermal_zones: thermal-zones {
 		cpu-thermal0 {
 			polling-delay-passive = <250>;
@@ -444,13 +439,6 @@
 					type = "critical";
 				};
 			};
-			cooling-maps {
-				map0 {
-					trip = <&gpu_alert0>;
-					cooling-device =
-					<&throttle_devfreq 0 1>;
-				};
-			};
 		};
 
 		gpu-thermal1 {
@@ -467,13 +455,6 @@
 					temperature = <127000>;
 					hysteresis = <2000>;
 					type = "critical";
-				};
-			};
-			cooling-maps {
-				map0 {
-					trip = <&gpu_alert1>;
-					cooling-device =
-					<&throttle_devfreq 0 1>;
 				};
 			};
 		};
@@ -497,6 +478,36 @@
 		};
 	};
 
+	rpmsg0: rpmsg0{
+		compatible = "fsl,imx8qm-rpmsg";
+		/* up to now, the following channels are used in imx rpmsg
+		 * - tx1/rx1: messages channel.
+		 * - general interrupt1: remote proc finish re-init rpmsg stack
+		 *   when A core is partition reset.
+		 */
+		mbox-names = "tx", "rx", "rxdb";
+		mboxes = <&lsio_mu5 0 1
+			  &lsio_mu5 1 1
+			  &lsio_mu5 3 1>;
+		mub-partition = <3>;
+		status = "disabled";
+	};
+
+	rpmsg1: rpmsg1{
+		compatible = "fsl,imx8qm-rpmsg";
+		/* up to now, the following channels are used in imx rpmsg
+		 * - tx1/rx1: messages channel.
+		 * - general interrupt1: remote proc finish re-init rpmsg stack
+		 *   when A core is partition reset.
+		 */
+		mbox-names = "tx", "rx", "rxdb";
+		mboxes = <&lsio_mu6 0 1
+			  &lsio_mu6 1 1
+			  &lsio_mu6 3 1>;
+		mub-partition = <4>;
+		status = "disabled";
+	};
+
         sc_pwrkey: sc-powerkey {
 		compatible = "fsl,imx8-pwrkey";
 		linux,keycode = <KEY_POWER>;
@@ -510,20 +521,19 @@
 		ranges = <0x55000000 0x0 0x55000000 0x1000000>;
 
 		dsp: dsp@556e8000 {
-			compatible = "fsl,imx8qm-hifi4";
+			compatible = "fsl,imx8qm-dsp";
 			reg = <0x556e8000 0x88000>;
 			clocks = <&clk_dummy>,
 				 <&clk_dummy>,
 				 <&clk_dummy>;
-			clock-names = "dsp_clk1", "dsp_clk2", "dsp_clk3";
-			firmware-name = "imx/dsp/hifi4.bin";
-			power-domains = <&pd IMX_SC_R_MU_13B>,
+			clock-names = "ipg", "ocram", "core";
+			fsl,dsp-firmware = "imx/dsp/hifi4.bin";
+			power-domains = <&pd IMX_SC_R_MU_13A>,
+					<&pd IMX_SC_R_MU_13B>,
 					<&pd IMX_SC_R_DSP>,
 					<&pd IMX_SC_R_DSP_RAM>;
-			mbox-names = "tx0", "rx0", "rxdb0";
-			mboxes = <&lsio_mu13 0 0>,
-				 <&lsio_mu13 1 0>,
-				 <&lsio_mu13 3 0>;
+			memory-region = <&dsp_reserved>;
+			fixup-offset = <0x4000000>;
 			status = "disabled";
 		};
 	};

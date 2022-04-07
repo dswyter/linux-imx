@@ -11,7 +11,7 @@
 
 	chosen {
 		stdout-path = &uart2;
-		bootargs-append = "console=ttymxc1,115200 earlycon=ec_imx6q,0x30890000,115200 androidboot.console=ttymxc1  androidboot.primary_display=imx-drm androidboot.board=varsommx8mp androidboot.bt_sdio=/sys/bus/mmc/devices/mmc0:0001/mmc0:0001:1/device androidboot.bt_sdio_id=0x4339 androidboot.bt_uart=/dev/ttymxc2 androidboot.wificountrycode=US";
+		bootargs-append = "console=ttymxc1,115200 earlycon=ec_imx6q,0x30890000,115200 androidboot.console=ttymxc1  androidboot.primary_display=imx-drm androidboot.board=varsommx8mp androidboot.bt_sdio=/sys/bus/mmc/devices/mmc0:0001/mmc0:0001:1/device androidboot.bt_sdio_id=0x4339 androidboot.bt_uart=/dev/ttymxc2 androidboot.wificountrycode=EU";
 	};
 
 	gpio-keys {
@@ -19,8 +19,8 @@
 		status = "okay";
 
 		back {
-			label = "Back";
-			linux,code = <KEY_BACK>;
+			label = "Power";
+			linux,code = <KEY_POWER>;
 			gpios = <&pca9534 1 GPIO_ACTIVE_LOW>;
 			wakeup-source;
 		};
@@ -119,7 +119,7 @@
 		width-mm = <211>;
 		height-mm = <158>;
 		label = "g104age_l02";
-		data-mapping = "jeida-24";
+		data-mapping = "vesa-24";
 		status = "okay";
 
 		panel-timing {
@@ -309,7 +309,7 @@
 	status = "okay";
 
 	lvds-channel@0 {
-		fsl,data-mapping = "jeida";
+		fsl,data-mapping = "spwg";
 		fsl,data-width = <24>;
 		status = "okay";
 

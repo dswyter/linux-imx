@@ -119,7 +119,7 @@
 		width-mm = <246>;
 		height-mm = <184>;
 		label = "g121xce_l01";
-		data-mapping = "jeida-24";
+		data-mapping = "vesa-24";
 		status = "okay";
 
 		panel-timing {
@@ -312,7 +312,7 @@
 	status = "okay";
 
 	lvds-channel@0 {
-		fsl,data-mapping = "jeida";
+		fsl,data-mapping = "spwg";
 		fsl,data-width = <24>;
 		status = "okay";
 

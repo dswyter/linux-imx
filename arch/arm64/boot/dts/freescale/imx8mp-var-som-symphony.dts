@@ -12,7 +12,6 @@
 
 	chosen {
 		stdout-path = &uart2;
-		bootargs-append = "console=ttymxc1,115200 earlycon=ec_imx6q,0x30890000,115200 androidboot.console=ttymxc1  androidboot.primary_display=imx-drm androidboot.board=varsommx8mp androidboot.bt_sdio=/sys/bus/mmc/devices/mmc0:0001/mmc0:0001:1/device androidboot.bt_sdio_id=0x4339 androidboot.bt_uart=/dev/ttymxc2 androidboot.wificountrycode=EU";
 	};
 
 	reg_usdhc2_vmmc: regulator-usdhc2-vmmc {
@@ -182,6 +181,22 @@
 			gpios = <&gpio1 13 GPIO_ACTIVE_LOW>;
 		};
 	};
+
+	sound_hdmi: sound_hdmi {
+		compatible = "fsl,imx-audio-cdnhdmi";
+		model = "audio-hdmi";
+		audio-cpu = <&aud2htx>;
+		hdmi-out;
+		constraint-rate = <44100>,
+				<88200>,
+				<176400>,
+				<32000>,
+				<48000>,
+				<96000>,
+				<192000>;
+		status = "okay";
+	};
+				
 
 };
 

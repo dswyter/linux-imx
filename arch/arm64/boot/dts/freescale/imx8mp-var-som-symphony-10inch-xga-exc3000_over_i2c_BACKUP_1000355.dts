@@ -11,35 +11,102 @@
 
 	chosen {
 		stdout-path = &uart2;
+<<<<<<< HEAD
+		bootargs-append = "console=ttymxc1,115200 earlycon=ec_imx6q,0x30890000,115200 androidboot.console=ttymxc1  androidboot.primary_display=imx-drm androidboot.board=varsommx8mp androidboot.bt_sdio=/sys/bus/mmc/devices/mmc0:0001/mmc0:0001:1/device androidboot.bt_sdio_id=0x4339 androidboot.bt_uart=/dev/ttymxc2 androidboot.wificountrycode=EU";
+=======
 		bootargs-append = "console=ttymxc1,115200 earlycon=ec_imx6q,0x30890000,115200 androidboot.console=ttymxc1  androidboot.primary_display=imx-drm androidboot.board=varsommx8mp androidboot.bt_sdio=/sys/bus/mmc/devices/mmc0:0001/mmc0:0001:1/device androidboot.bt_sdio_id=0x4339 androidboot.bt_uart=/dev/ttymxc2 androidboot.wificountrycode=US";
+>>>>>>> 756017d9c157c713de07660cebabf5431ab96a0b
 	};
 
 	gpio-keys {
 		compatible = "gpio-keys";
 		status = "okay";
+<<<<<<< HEAD
+		pinctrl-0 = <&pinctrl_gpio_keys>;
 
 		power {
+			label = "Power";
+			linux,code = <KEY_POWER>;
+			gpios = <&gpio1 6 GPIO_ACTIVE_LOW>;
+			wakeup-source;
+		};
+
+		volumeup {
+			label = "VolumeUp";
+			linux,code = <KEY_VOLUMEUP>;
+			gpios = <&gpio1 0 GPIO_ACTIVE_LOW>;
+			wakeup-source;
+		};
+
+		volumedown {
+			label = "VolumeDown";
+			linux,code = <KEY_VOLUMEUP>;
+			gpios = <&gpio1 8 GPIO_ACTIVE_LOW>;
+			wakeup-source;
+		};
+
+		enter {
+			label = "Enter";
+			linux,code = <KEY_ENTER>;
+			gpios = <&gpio1 3 GPIO_ACTIVE_LOW>;
+			wakeup-source;
+		};
+
+		tab {
+			label = "Tab";
+			linux,code = <KEY_TAB>;
+			gpios = <&gpio4 27 GPIO_ACTIVE_LOW>;
+			wakeup-source;
+		};
+
+		escape {
+			label = "Escape";
+			linux,code = <KEY_ESC>;
+			gpios = <&gpio3 6 GPIO_ACTIVE_LOW>;
+			wakeup-source;
+		};
+			      
+	};
+
+	gpio-keys2 {
+		compatible = "gpio-keys";
+		status = "okay";
+
+		power2 {
+			label = "Power2";
+			linux,code = <KEY_POWER>;
+			gpios = <&pca9534 1 GPIO_ACTIVE_LOW>;
+			wakeup-source;
+		};
+
+	};
+
+
+=======
+
+		back {
 			label = "Power";
 			linux,code = <KEY_POWER>;
 			gpios = <&pca9534 1 GPIO_ACTIVE_LOW>;
 			wakeup-source;
 		};
 
-		volumeup {
-			label = "Volume Up";
-			linux,code = <KEY_VOLUMEUP>;
+		home {
+			label = "Home";
+			linux,code = <KEY_HOMEPAGE>;
 			gpios = <&pca9534 2 GPIO_ACTIVE_LOW>;
 			wakeup-source;
 		};
 
-		volumedown {
-			label = "Volume Down";
-			linux,code = <KEY_VOLUMEDOWN>;
+		menu {
+			label = "Menu";
+			linux,code = <KEY_MENU>;
 			gpios = <&pca9534 3 GPIO_ACTIVE_LOW>;
 			wakeup-source;
 		};
 	};
 
+>>>>>>> 756017d9c157c713de07660cebabf5431ab96a0b
 	gpio-leds {
 		compatible = "gpio-leds";
 		status = "okay";
@@ -114,16 +181,16 @@
 	};
 
 	panel {
-		compatible = "innolux,g121xce_l01", "panel-lvds";
+		compatible = "65000000", "panel-lvds";
 		backlight = <&backlight>;
-		width-mm = <246>;
-		height-mm = <184>;
-		label = "g121xce_l01";
+		width-mm = <210>;
+		height-mm = <158>;
+		label = "g104xce-l01";
 		data-mapping = "vesa-24";
 		status = "okay";
 
 		panel-timing {
-			clock-frequency = <64900000>;
+			clock-frequency = <65000000>;
 			hactive = <1024>;
 			vactive = <768>;
 			hback-porch = <160>;
@@ -224,6 +291,8 @@
 		};
 	};
 
+<<<<<<< HEAD
+=======
 	ov5640_mipi0: ov5640_mipi@3c {
 		compatible = "ovti,ov5640";
 		reg = <0x3c>;
@@ -255,6 +324,7 @@
 			};
 		};
 	};
+>>>>>>> 756017d9c157c713de07660cebabf5431ab96a0b
 };
 
 &i2c4 {
@@ -272,22 +342,23 @@
 		reg = <0x68>;
 		status = "okay";
 	};
+	
+        touchscreen@2a {
+<<<<<<< HEAD
+                compatible = "eeti,egalax_ts";
+=======
+                compatible = "eeti,exc80h60";
+>>>>>>> 756017d9c157c713de07660cebabf5431ab96a0b
+                pinctrl-names = "default";
+                pinctrl-0 = <&pinctrl_i2c4>;
+                reg = <0x2a>;
+                interrupt-parent = <&gpio1>;
+                interrupts = <12 IRQ_TYPE_LEVEL_LOW>;
+                touchscreen-inverted-x;
+                touchscreen-swapped-x-y;
+                status = "okay";
+        };
 
-	/* Capacitive touch controller */
-	ft5x06_ts: ft5x06_ts@38 {
-		compatible = "edt,edt-ft5206";
-		reg = <0x38>;
-		pinctrl-names = "default";
-		pinctrl-0 = <&pinctrl_captouch>;
-		interrupt-parent = <&gpio5>;
-		interrupts = <3 IRQ_TYPE_EDGE_FALLING>;
-		touchscreen-size-x = <800>;
-		touchscreen-size-y = <480>;
-		touchscreen-inverted-x;
-		touchscreen-inverted-y;
-		wakeup-source;
-		status = "okay";
-	};
 };
 
 &flexcan2 {
@@ -446,6 +517,8 @@
 	status = "okay";
 };
 
+<<<<<<< HEAD
+=======
 &mipi_csi_0 {
 	#address-cells = <1>;
 	#size-cells = <0>;
@@ -463,6 +536,7 @@
 	};
 };
 
+>>>>>>> 756017d9c157c713de07660cebabf5431ab96a0b
 &mipi_csi_1 {
 	status = "disabled";
 };
@@ -533,6 +607,8 @@
 	};
 };
 
+<<<<<<< HEAD
+=======
 &gpio1 {
 	cam_buf_hog {
 		gpio-hog;
@@ -542,6 +618,7 @@
 	};
 };
 
+>>>>>>> 756017d9c157c713de07660cebabf5431ab96a0b
 &iomuxc {
 	pinctrl-names = "default";
 	pinctrl-0 = <&pinctrl_hog>;
@@ -561,6 +638,20 @@
 		>;
 	};
 
+<<<<<<< HEAD
+	pinctrl_gpio_keys: keygrp {
+		fsl,pins = <
+			MX8MP_IOMUXC_GPIO1_IO00__GPIO1_IO00				0x142
+			MX8MP_IOMUXC_GPIO1_IO03__GPIO1_IO03				0x142
+			MX8MP_IOMUXC_GPIO1_IO06__GPIO1_IO06				0x142
+			MX8MP_IOMUXC_GPIO1_IO08__GPIO1_IO08				0x142
+			MX8MP_IOMUXC_NAND_DATA00__GPIO3_IO06				0x142
+			MX8MP_IOMUXC_SAI2_MCLK__GPIO4_IO27				0x142
+		>;
+	};
+
+=======
+>>>>>>> 756017d9c157c713de07660cebabf5431ab96a0b
 	pinctrl_fec: fecgrp {
 		fsl,pins = <
 			MX8MP_IOMUXC_SAI1_RXD4__ENET1_RGMII_RD0				0x90
@@ -582,7 +673,10 @@
 		fsl,pins = <
 			MX8MP_IOMUXC_NAND_ALE__FLEXSPI_A_SCLK				0x1c2
 			MX8MP_IOMUXC_NAND_CE0_B__FLEXSPI_A_SS0_B			0x82
+<<<<<<< HEAD
+=======
 			MX8MP_IOMUXC_NAND_DATA00__FLEXSPI_A_DATA00			0x82
+>>>>>>> 756017d9c157c713de07660cebabf5431ab96a0b
 			MX8MP_IOMUXC_NAND_DATA01__FLEXSPI_A_DATA01			0x82
 			MX8MP_IOMUXC_NAND_DATA02__FLEXSPI_A_DATA02			0x82
 			MX8MP_IOMUXC_NAND_DATA03__FLEXSPI_A_DATA03			0x82
@@ -737,6 +831,8 @@
 		>;
 	};
 
+<<<<<<< HEAD
+=======
 	pinctrl_csi0: csi0grp {
 		fsl,pins = <
 			MX8MP_IOMUXC_GPIO1_IO00__GPIO1_IO00				0x10
@@ -744,6 +840,7 @@
 			>;
 	};
 
+>>>>>>> 756017d9c157c713de07660cebabf5431ab96a0b
 	pinctrl_csi1: csi1grp {
 		fsl,pins = <
 			MX8MP_IOMUXC_SAI1_RXD7__GPIO4_IO09				0x10

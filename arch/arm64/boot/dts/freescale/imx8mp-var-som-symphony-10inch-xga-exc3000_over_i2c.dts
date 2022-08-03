@@ -2,6 +2,7 @@
 /*
  * Copyright 2019 NXP
  * Copyright 2020-2021 Variscite Ltd.
+ * console=ttymxc1,115200
  */
 
 #include "imx8mp-var-som.dtsi"
@@ -12,80 +13,6 @@
 	chosen {
 		stdout-path = &uart2;
 		bootargs-append = "console=ttymxc1,115200 earlycon=ec_imx6q,0x30890000,115200 androidboot.console=ttymxc1  androidboot.primary_display=imx-drm androidboot.board=varsommx8mp androidboot.bt_sdio=/sys/bus/mmc/devices/mmc0:0001/mmc0:0001:1/device androidboot.bt_sdio_id=0x4339 androidboot.bt_uart=/dev/ttymxc2 androidboot.wificountrycode=EU";
-	};
-
-	gpio-keys {
-		compatible = "gpio-keys";
-		status = "okay";
-		pinctrl-0 = <&pinctrl_gpio_keys>;
-
-		power {
-			label = "Power";
-			linux,code = <KEY_POWER>;
-			gpios = <&gpio1 6 GPIO_ACTIVE_LOW>;
-			wakeup-source;
-		};
-
-		volumeup {
-			label = "VolumeUp";
-			linux,code = <KEY_VOLUMEUP>;
-			gpios = <&gpio1 0 GPIO_ACTIVE_LOW>;
-			wakeup-source;
-		};
-
-		volumedown {
-			label = "VolumeDown";
-			linux,code = <KEY_VOLUMEUP>;
-			gpios = <&gpio1 8 GPIO_ACTIVE_LOW>;
-			wakeup-source;
-		};
-
-		enter {
-			label = "Enter";
-			linux,code = <KEY_ENTER>;
-			gpios = <&gpio1 3 GPIO_ACTIVE_LOW>;
-			wakeup-source;
-		};
-
-		tab {
-			label = "Tab";
-			linux,code = <KEY_TAB>;
-			gpios = <&gpio4 27 GPIO_ACTIVE_LOW>;
-			wakeup-source;
-		};
-
-		escape {
-			label = "Escape";
-			linux,code = <KEY_ESC>;
-			gpios = <&gpio3 6 GPIO_ACTIVE_LOW>;
-			wakeup-source;
-		};
-			      
-	};
-
-	gpio-keys2 {
-		compatible = "gpio-keys";
-		status = "okay";
-
-		power2 {
-			label = "Power2";
-			linux,code = <KEY_POWER>;
-			gpios = <&pca9534 1 GPIO_ACTIVE_LOW>;
-			wakeup-source;
-		};
-
-	};
-
-
-	gpio-leds {
-		compatible = "gpio-leds";
-		status = "okay";
-
-		heartbeat {
-			label = "Heartbeat";
-			linux,default-trigger = "heartbeat";
-			gpios = <&pca9534 0 GPIO_ACTIVE_HIGH>;
-		};
 	};
 
 	reg_usdhc2_vmmc: regulator-usdhc2-vmmc {
@@ -151,16 +78,16 @@
 	};
 
 	panel {
-		compatible = "65000000", "panel-lvds";
+		compatible = "innolux,g121xce_l01", "panel-lvds";
 		backlight = <&backlight>;
-		width-mm = <210>;
-		height-mm = <158>;
-		label = "g104xce-l01";
+		width-mm = <246>;
+		height-mm = <184>;
+		label = "g121xce_l01";
 		data-mapping = "vesa-24";
 		status = "okay";
 
 		panel-timing {
-			clock-frequency = <65000000>;
+			clock-frequency = <64900000>;
 			hactive = <1024>;
 			vactive = <768>;
 			hback-porch = <160>;
@@ -179,8 +106,7 @@
 				remote-endpoint = <&lvds_out>;
 			};
 		};
-	};
-
+	};																
 
 	extcon_usb1: extcon_usb1 {
 		compatible = "linux,extcon-usb-gpio";
@@ -189,6 +115,74 @@
 		id-gpio = <&gpio1 5 GPIO_ACTIVE_HIGH>;
 		status = "okay";
 	};
+
+	gpio_keys_polled {
+		compatible = "gpio-keys-polled";
+		status = "okay";
+		pinctrl-0 = <&pinctrl_gpio_keys>;
+		poll-interval = <50>;
+		autorepeat;
+		
+						
+		volumeup {
+			label = "VolumeUp";
+			linux,code = <KEY_VOLUMEUP>;
+			gpios = <&gpio1 0 GPIO_ACTIVE_LOW>;
+		};
+		
+		volumedown {
+			label = "VolumeDown";
+			linux,code = <KEY_VOLUMEDOWN>;
+			gpios = <&gpio1 8 GPIO_ACTIVE_LOW>;
+		};
+		
+
+		enter {
+			label = "Enter";
+			linux,code = <KEY_ENTER>;
+			gpios = <&gpio1 3 GPIO_ACTIVE_LOW>;
+		};
+
+		tab {
+			label = "Tab";
+			linux,code = <KEY_TAB>;
+			gpios = <&gpio4 27 GPIO_ACTIVE_LOW>;
+		};
+
+		escape {
+			label = "Escape";
+			linux,code = <KEY_ESC>;
+			gpios = <&gpio3 6 GPIO_ACTIVE_LOW>;
+		};
+	};
+
+	gpio_keys {
+		compatible = "gpio-keys";
+		status = "okay";
+		pinctrl-0 = <&pinctrl_gpio_keys>;
+		autorepeat;
+
+		power {
+		label = "Power";
+		linux,code = <KEY_POWER>;
+		gpios = <&gpio1 6 GPIO_ACTIVE_LOW>;
+		wakeup-source;
+		};
+	};
+       
+	gpio-leds {
+		compatible = "gpio-leds";
+		status = "okay";
+		pinctrl-0 = <&pinctrl_gpio_leds>;
+
+		heartbeat {
+			label = "Heartbeat";
+			linux,default-trigger = "timer";
+			led-pattern = <1000>, <60000>;
+			gpios = <&gpio1 13 GPIO_ACTIVE_LOW>;
+		};
+	};
+
 };
 
 &aud2htx {
@@ -540,12 +534,18 @@
 
 	pinctrl_gpio_keys: keygrp {
 		fsl,pins = <
-			MX8MP_IOMUXC_GPIO1_IO00__GPIO1_IO00				0x142
-			MX8MP_IOMUXC_GPIO1_IO03__GPIO1_IO03				0x142
-			MX8MP_IOMUXC_GPIO1_IO06__GPIO1_IO06				0x142
-			MX8MP_IOMUXC_GPIO1_IO08__GPIO1_IO08				0x142
-			MX8MP_IOMUXC_NAND_DATA00__GPIO3_IO06				0x142
-			MX8MP_IOMUXC_SAI2_MCLK__GPIO4_IO27				0x142
+			MX8MP_IOMUXC_GPIO1_IO00__GPIO1_IO00			        0x00000002
+			MX8MP_IOMUXC_GPIO1_IO03__GPIO1_IO03				0x00000002
+			MX8MP_IOMUXC_GPIO1_IO06__GPIO1_IO06				0x00000002
+			MX8MP_IOMUXC_GPIO1_IO08__GPIO1_IO08				0x00000002
+			MX8MP_IOMUXC_NAND_DATA00__GPIO3_IO06				0x00000002
+			MX8MP_IOMUXC_SAI2_MCLK__GPIO4_IO27				0x00000002
+		>;
+	};
+
+	pinctrl_gpio_leds: ledgrp {
+		fsl,pins = <
+		MX8MP_IOMUXC_GPIO1_IO13__GPIO1_IO13					0x00000002
 		>;
 	};
 
@@ -636,7 +636,7 @@
 
 	pinctrl_usdhc2_gpio: usdhc2grp-gpio {
 		fsl,pins = <
-			MX8MP_IOMUXC_GPIO1_IO14__GPIO1_IO14 				0x1c4
+			MX8MP_IOMUXC_GPIO1_IO14__GPIO1_IO14				0x1c4
 			MX8MP_IOMUXC_SAI2_RXC__GPIO4_IO22				0x10
 			MX8MP_IOMUXC_SD2_CD_B__GPIO2_IO12				0xc0
 		>;
@@ -679,7 +679,7 @@
 		fsl,pins = <
 			MX8MP_IOMUXC_I2C1_SCL__ECSPI1_SCLK				0x12
 			MX8MP_IOMUXC_I2C1_SDA__ECSPI1_MOSI				0x12
-			MX8MP_IOMUXC_I2C2_SCL__ECSPI1_MISO 				0x12
+			MX8MP_IOMUXC_I2C2_SCL__ECSPI1_MISO				0x12
 			MX8MP_IOMUXC_I2C2_SDA__GPIO5_IO17				0x12
 		>;
 	};
@@ -688,14 +688,14 @@
 		fsl,pins = <
 			MX8MP_IOMUXC_ECSPI2_SCLK__ECSPI2_SCLK				0x12
 			MX8MP_IOMUXC_ECSPI2_MOSI__ECSPI2_MOSI				0x12
-			MX8MP_IOMUXC_ECSPI2_MISO__ECSPI2_MISO 				0x12
+			MX8MP_IOMUXC_ECSPI2_MISO__ECSPI2_MISO				0x12
 			MX8MP_IOMUXC_ECSPI2_SS0__GPIO5_IO13				0x12
 		>;
 	};
 
 	pinctrl_captouch: captouchgrp {
 		fsl,pins = <
-			MX8MP_IOMUXC_SPDIF_TX__GPIO5_IO03 				0x16
+			MX8MP_IOMUXC_SPDIF_TX__GPIO5_IO03				0x16
 		>;
 	};
 
